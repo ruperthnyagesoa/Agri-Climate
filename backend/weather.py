@@ -34,3 +34,18 @@ def geocode_location(address="13024 Green Valley Rd, Sebastopol, CA 95472"):
         "access_key": access_key,
         "query": address,
     }
+    # Send the API request
+    response = requests.get(api_url, params=params)
+    # Process the response
+    if response.status_code == 200:
+        data = response.json()
+        if data["data"]:
+            # Extract the latitude and longitude from the response
+            latitude = data["data"][0]["latitude"]
+            longitude = data["data"][0]["longitude"]
+            return latitude, longitude
+        else:
+            print("No results found.")
+    else:
+        print("API request failed with status code:", response.status_code)
+    return None, None
