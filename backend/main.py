@@ -15,6 +15,7 @@ app.add_middleware(
     allow_headers=["*"],
     allow_credentials=True,
 )
+
 # This is a cache of conversations to avoid reprocessing
 CONVERSATIONS = {
     "conv1": {
@@ -41,6 +42,8 @@ CONVERSATIONS = {
         ],
     },
 }
+
+
 class Conversation(BaseModel):
     convId: str
 
@@ -74,6 +77,8 @@ async def reset_airtable(forecast: Forecast):
         "temperature": temperature,
         "precipitation": precipitation,
     }
+
+
 @app.post("/parse")
 async def parse(conv: Conversation):
     from openai_wrapper import parse_transcript, clean_json_str, generate_questions
