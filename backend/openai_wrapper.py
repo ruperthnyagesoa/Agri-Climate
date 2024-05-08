@@ -34,7 +34,6 @@ For any information not present in transcript, return N.A
 Transcript:
 """
 
-
 # TODO: Look into the new OpenAI json output format
 def clean_json_str(raw_str):
     # Clean string and parse as json
@@ -45,8 +44,7 @@ def clean_json_str(raw_str):
 
     # return dict(FieldData(**(json.loads(temp))))
     return json.loads(temp)
-
-
+  
 def parse_transcript(transcript):
     message = PROMPT_PARSE + transcript
     response = openai.ChatCompletion.create(
