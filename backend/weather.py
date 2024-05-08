@@ -6,6 +6,7 @@ def get_temperature_forecast(forecast_days, latitude, longitude):
     api_url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&hourly=temperature_2m,precipitation_probability&forecast_days={forecast_days}"
     # Send the API request
     response = requests.get(api_url)
+
     # Process the response
     if response.status_code == 200:
         data = response.json()
@@ -49,6 +50,7 @@ def geocode_location(address="13024 Green Valley Rd, Sebastopol, CA 95472"):
     else:
         print("API request failed with status code:", response.status_code)
     return None, None
+  
 # Example usage
 query = "13024 Green Valley Rd, Sebastopol, CA 95472"
 latitude, longitude = geocode_location(query)
@@ -64,4 +66,5 @@ temperature = get_temperature_forecast(forecast_days, latitude, longitude)
 if temperature:
     print(f"Temperature: {temperature}°C")
 else:
+
     print("No results found.")
