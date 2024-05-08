@@ -33,3 +33,13 @@ For any information not present in transcript, return N.A
 
 Transcript:
 """
+# TODO: Look into the new OpenAI json output format
+def clean_json_str(raw_str):
+    # Clean string and parse as json
+    temp = raw_str.replace("\n", "")
+    temp = temp.replace("'", '"')
+    temp = temp.replace("True", "true")
+    temp = temp.replace("False", "false")
+
+    # return dict(FieldData(**(json.loads(temp))))
+    return json.loads(temp)
