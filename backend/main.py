@@ -74,3 +74,38 @@ async def reset_airtable(forecast: Forecast):
         "temperature": temperature,
         "precipitation": precipitation,
     }
+@app.post("/parse")
+async def parse(conv: Conversation):
+    from openai_wrapper import parse_transcript, clean_json_str, generate_questions
+    from airtable import insert_row, clear_table, print_table
+
+    conv_id = conv.convId
+    conv_data = CONVERSATIONS[conv_id]
+
+    # Step 1: Transcribe
+    print("Getting transcript")
+    # TODO: Implement whisper call. Something like...
+    # transcript = transcribe_audio(conv_data["audio"])
+    transcript = conv_data["transcript"]
+
+    # Step 2: Parse
+    print("Parsing transcript")
+    # parsed_json = parse_transcript(transcript)
+    parsed_json = clean_json_str(conv_data["chat_completion"])
+
+    # Step 3: Send to airtable
+    print("Populating airtable")
+    clear_table()
+    for row in parsed_json["fields"]:
+        insert_row(row)
+
+    # Step 4: Generate questions
+    print("Generating questions")
+    # questions = generate_questions(transcript, parsed_json)["questions"]
+    questions = conv_data["questions"]
+
+    return {
+        "transcript": transcript,
+        "parsed_json": parsed_json,
+        "questions": questions,
+    }
