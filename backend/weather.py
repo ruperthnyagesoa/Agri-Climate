@@ -29,3 +29,8 @@ def get_temperature_forecast(forecast_days, latitude, longitude):
 def geocode_location(address="13024 Green Valley Rd, Sebastopol, CA 95472"):
     api_url = "http://api.positionstack.com/v1/forward"
     access_key = "1db69d9dca8eec0e7f916c78f7bc0f65"
+    # Define the parameters for your API request
+    params = {
+        "access_key": access_key,
+        "query": address,
+    }
