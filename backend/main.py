@@ -41,3 +41,36 @@ CONVERSATIONS = {
         ],
     },
 }
+class Conversation(BaseModel):
+    convId: str
+
+
+class Forecast(BaseModel):
+    days: int
+
+
+@app.get("/")
+async def main():
+    return {"message": "Hello World"}
+
+
+@app.post("/reset_airtable")
+async def reset_airtable():
+    from airtable import clear_table
+
+    clear_table()
+
+
+@app.post("/weather")
+async def reset_airtable(forecast: Forecast):
+    from weather import geocode_location, get_temperature_forecast
+
+    latitude, longitude = geocode_location()
+    temperature, precipitation = get_temperature_forecast(
+        forecast.days, latitude, longitude
+    )
+
+    return {
+        "temperature": temperature,
+        "precipitation": precipitation,
+    }
